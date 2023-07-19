@@ -1,0 +1,29 @@
+version: '3'
+services:
+    web:
+        build: .
+        container_name: l10-task-list-server
+        ports:
+            - "8000:8000"
+        networks:
+            - laravel-network
+    db:
+        image: mysql:8.0.33
+        container_name: l10-task-list-db
+        restart: always
+        environment:
+            MYSQL_DB: laravel
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: fidelio
+        ports:
+            - "3306:3306"
+        volumes:
+            - laravel-db:/var/lib/mysql
+        networks:
+            - laravel-network
+networks:
+    laravel-network:
+        driver: bridge
+volumes:
+    laravel-db:
+        driver: local
